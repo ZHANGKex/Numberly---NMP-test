@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Generated URLs{% endblock %}
+
+{% block content %}
+<h1>Generated URLs</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Original URL</th>
+            <th>Short URL</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for url in urls %}
+        <tr>
+            <td>{{ url.original_url }}</td>
+            <td><a href="{{ url.short_url }}">{{ url.short_url }}</a></td>
+            <td>
+                <button class="button" onclick="copyToClipboard('{{ url.short_url }}')">Copy</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    function copyToClipboard(url) {
+        navigator.clipboard.writeText(url).then(function() {
+            alert("Copied to clipboard: " + url);
+        }, function(err) {
+            console.error("Could not copy text: ", err);
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Short URL Created{% endblock %}
+
+{% block content %}
+<h1>Short URL Created</h1>
+<p>Your short URL is: <strong id="short-url">{{ short_url }}</strong></p>
+<button class="button" onclick="copyToClipboard()">Copy to Clipboard</button>
+<a href="{{ short_url }}" class="button">Go to URL</a>
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("short-url");
+        navigator.clipboard.writeText(copyText.innerText).then(function() {
+            alert("Copied to clipboard: " + copyText.innerText);
+        }, function(err) {
+            console.error("Could not copy text: ", err);
+        });
+    }
+</script>
+{% endblock %}

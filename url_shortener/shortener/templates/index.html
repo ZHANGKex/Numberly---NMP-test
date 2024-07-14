@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Generate Short URL{% endblock %}
+
+{% block content %}
+<h1>Generate Short URL</h1>
+<form method="post" onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="original_url">Enter URL to shorten:</label>
+        <input type="url" id="original_url" name="original_url" required>
+    </div>
+    <button class="button" type="submit">Shorten</button>
+    <p id="error-message" class="error"></p>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+</form>
+
+<script>
+    function validateForm() {
+        const urlInput = document.getElementById("original_url");
+        const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+        const errorMessage = document.getElementById("error-message");
+
+        if (!urlPattern.test(urlInput.value)) {
+            errorMessage.textContent = "Please enter a valid URL.";
+            return false;
+        }
+
+        errorMessage.textContent = "";
+        return true;
+    }
+</script>
+{% endblock %}
